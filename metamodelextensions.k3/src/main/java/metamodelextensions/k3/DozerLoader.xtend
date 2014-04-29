@@ -15,11 +15,11 @@ class DozerLoader implements ExtensionsAwareLoader
 		EPackage$Registry.INSTANCE.put(tfsm.TfsmPackage.eNS_URI, tfsm.TfsmPackage.eINSTANCE)
 	}
 
-	override loadExtendedAsBase(String uri) {
+	override loadExtendedAsBase(String uri, boolean loadOnDemand) {
 		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 
-	override loadBaseAsExtended(String uri) {
+	override loadBaseAsExtended(String uri, boolean loadOnDemand) {
 		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 }

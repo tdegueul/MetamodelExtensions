@@ -1,16 +1,16 @@
 package metamodelextensions.k3.tests
 
-import metamodelextensions.k3.ExtensionsAwareLoader
 import metamodelextensions.k3.DozerLoader
+import metamodelextensions.k3.ExtensionsAwareLoader
+import metamodelextensions.k3.PackageCompatibilityError
+
+import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecore.resource.Resource
 
 import static org.junit.Assert.*
 
 import org.junit.Before
 import org.junit.Test
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
-import org.eclipse.emf.ecore.EPackage
-import metamodelextensions.k3.PackageCompatibilityError
 
 class DozerStrategyTest
 {
@@ -24,7 +24,7 @@ class DozerStrategyTest
 
 	@Test
 	def testLoadExtendedAsBase() {
-		val res = loader.loadExtendedAsBase(TFSM_INPUT)
+		val res = loader.loadExtendedAsBase(TFSM_INPUT, true)
 
 		// We loaded a Tfsm-conforming model and now we expect a fsm-conforming one
 		assertTrue(res.contents.head instanceof fsm.FSM)
@@ -62,12 +62,12 @@ class DozerStrategyTest
 	@Test(expected = PackageCompatibilityError)
 	def void testLoadIncorrectExtendedAsBase() {
 		// Trying to use Fsm as extended metamodel should raise an exception
-		loader.loadExtendedAsBase(FSM_INPUT)
+		loader.loadExtendedAsBase(FSM_INPUT, true)
 	}
 
 	@Test
 	def testLoadBaseAsExtended() {
-		val res = loader.loadBaseAsExtended(FSM_INPUT)
+		val res = loader.loadBaseAsExtended(FSM_INPUT, true)
 
 		// We loaded a Fsm-conforming model and now we expect a Tfsm-conforming one
 		assertTrue(res.contents.head instanceof tfsm.FSM)
@@ -108,7 +108,7 @@ class DozerStrategyTest
 	@Test(expected = PackageCompatibilityError)
 	def void testLoadIncorrectBaseAsExtended() {
 		// Trying to use Tfsm as base metamodel should raise an exception
-		loader.loadBaseAsExtended(TFSM_INPUT)
+		loader.loadBaseAsExtended(TFSM_INPUT, true)
 	}
 
 	// --- We don't care about that --- //
