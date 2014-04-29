@@ -6,4 +6,7 @@ plugin.properties
 .settings/
 META-INF/
 bin/
+target/
+xtend-gen/
+generated-sources/
 
