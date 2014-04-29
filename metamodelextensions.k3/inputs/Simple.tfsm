@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tfsm:FSM xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tfsm="http://tfsm/1.0">
+  <ownedState xsi:type="tfsm:State" name="s11" time="3">
+    <outgoingTransition xsi:type="tfsm:Transition" input="i11" output="o11" target="//@ownedState.1">
+      <guard time="4"/>
+    </outgoingTransition>
+  </ownedState>
+  <ownedState xsi:type="tfsm:State" name="s22" incomingTransition="//@ownedState.0/@outgoingTransition.0" time="5">
+    <outgoingTransition xsi:type="tfsm:Transition" input="i22" output="o22" target="//@ownedState.2">
+      <guard time="7"/>
+    </outgoingTransition>
+  </ownedState>
+  <ownedState xsi:type="tfsm:State" name="s33" incomingTransition="//@ownedState.1/@outgoingTransition.0" time="7"/>
+</tfsm:FSM>

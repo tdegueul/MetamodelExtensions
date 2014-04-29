@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsm:FSM xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:fsm="http://fsm/1.0">
+  <ownedState name="s1">
+    <outgoingTransition input="i1" output="o1" target="//@ownedState.1"/>
+  </ownedState>
+  <ownedState name="s2" incomingTransition="//@ownedState.0/@outgoingTransition.0">
+    <outgoingTransition input="i2" output="o2" target="//@ownedState.2"/>
+  </ownedState>
+  <ownedState name="s3" incomingTransition="//@ownedState.1/@outgoingTransition.0"/>
+</fsm:FSM>
