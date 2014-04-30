@@ -1,13 +1,11 @@
 package metamodelextensions.k3.tests
 
-import static org.junit.Assert.*
+import metamodelextensions.k3.ExtendedMetadataLoader
 
-import org.junit.Test
-
-class MetadataStrategyTest
+class MetadataStrategyTest extends CommonTest
 {
-	@Test
-	def testStub() {
-		assertTrue(true)
+	override setUp() {
+		loader = new ExtendedMetadataLoader
+		loader.initialize(fsm.FsmPackage.eINSTANCE, tfsm.TfsmPackage.eINSTANCE)
 	}
 }
