@@ -7,6 +7,6 @@ interface ExtensionsAwareLoader
 {
 	def void     initialize(EPackage base, EPackage extended)
 
-	def Resource loadExtendedAsBase(String uri, boolean loadOnDemand)
-	def Resource loadBaseAsExtended(String uri, boolean loadOnDemand)
+	def Resource loadExtendedAsBase(String uri, boolean loadOnDemand) throws PackageCompatibilityError
+	def Resource loadBaseAsExtended(String uri, boolean loadOnDemand) throws PackageCompatibilityError
 }

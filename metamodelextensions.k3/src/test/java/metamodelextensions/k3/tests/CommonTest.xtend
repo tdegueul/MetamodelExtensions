@@ -16,11 +16,11 @@ abstract class CommonTest
 	protected ExtensionsAwareLoader loader
 	protected static final String FSM_INPUT  = "inputs/Simple.fsm"
 	protected static final String TFSM_INPUT = "inputs/Simple.tfsm"
-	
+
 	// Subclasses need to initialize the loader with the appropriate strategy
 	@Before
 	def void setUp()
-	
+
 	@Test
 	def testRegistration() {
 		assertTrue(EPackage$Registry.INSTANCE.containsKey(fsm.FsmPackage.eNS_URI))
