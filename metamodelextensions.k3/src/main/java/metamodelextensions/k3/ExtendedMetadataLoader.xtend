@@ -6,13 +6,19 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 
 class ExtendedMetadataLoader implements ExtensionsAwareLoader
 {
-	override initialize(EPackage base, EPackage extended) {
-		// Regular EMF Registration
-		Resource$Factory$Registry.INSTANCE.extensionToFactoryMap.put(fsm.FsmPackage.eNS_PREFIX,   new XMIResourceFactoryImpl)
-		Resource$Factory$Registry.INSTANCE.extensionToFactoryMap.put(tfsm.TfsmPackage.eNS_PREFIX, new XMIResourceFactoryImpl)
+	private EPackage pkgBase
+	private EPackage pkgExtended
 
-		EPackage$Registry.INSTANCE.put(fsm.FsmPackage.eNS_URI,   fsm.FsmPackage.eINSTANCE)
-		EPackage$Registry.INSTANCE.put(tfsm.TfsmPackage.eNS_URI, tfsm.TfsmPackage.eINSTANCE)
+	override initialize(EPackage base, EPackage extended) {
+		pkgBase = base
+		pkgExtended = extended
+
+		// Regular EMF Registration
+		Resource$Factory$Registry.INSTANCE.extensionToFactoryMap.put(base.nsPrefix,     new XMIResourceFactoryImpl)
+		Resource$Factory$Registry.INSTANCE.extensionToFactoryMap.put(extended.nsPrefix, new XMIResourceFactoryImpl)
+
+		EPackage$Registry.INSTANCE.put(base.nsURI,     base)
+		EPackage$Registry.INSTANCE.put(extended.nsURI, extended)
 	}
 
 	override loadExtendedAsBase(String uri, boolean loadOnDemand) {
