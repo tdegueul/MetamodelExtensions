@@ -53,7 +53,7 @@ abstract class CommonTest
 		val t22 = root.ownedState.get(1).outgoingTransition.get(0)
 
 		assertEquals(3, root.ownedState.size)
-		assertEquals(3, root.ownedState.map[outgoingTransition].flatten.size)
+		assertEquals(2, root.ownedState.map[outgoingTransition].flatten.size)
 		assertEquals("s11", s11.name)
 		assertEquals("s22", s22.name)
 		assertEquals("s33", s33.name)
