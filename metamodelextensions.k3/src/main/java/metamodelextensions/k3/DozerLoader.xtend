@@ -79,9 +79,6 @@ class DozerLoader implements ExtensionsAwareLoader
 			newRes.contents += mapper.map(o, pkgExtended.EClassifiers.findFirst[name == o.eClass.name].implementationClass) as EObject
 		]
 
-		println("newRes=")
-		newRes.allContents.forEach[println("\t"+it)]
-
 		return newRes
 	}
 
@@ -125,7 +122,9 @@ class ExtendedToBaseBuilder extends BeanMappingBuilder
 				baseImpl
 			)
 
-			cls.EReferences.forEach[ref |
+			cls.EReferences
+			.filter[upperBound < 0]
+			.forEach[ref |
 				val baseRefImpl = ref.EReferenceType.implementationClass
 				val extendedRefImpl = extendedCls.EAllReferences.findFirst[name == ref.name].EReferenceType.implementationClass
 
@@ -160,7 +159,10 @@ class BaseToExtendedBuilder extends BeanMappingBuilder
 				baseImpl,
 				extendedImpl
 			)
-			cls.EReferences.forEach[ref |
+
+			cls.EReferences
+			.filter[upperBound < 0]
+			.forEach[ref |
 				val baseRefImpl = ref.EReferenceType.implementationClass
 				val extendedRefImpl = pkgExtended.EClassifiers.filter(EClass).findFirst[name == ref.EReferenceType.name].implementationClass
 
