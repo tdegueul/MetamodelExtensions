@@ -63,14 +63,26 @@ class DozerLoader implements ExtensionsAwareLoader
 	}
 
 	override loadBaseAsExtended(String uri, boolean loadOnDemand) throws PackageCompatibilityError {
+		val mapper = new DozerBeanMapper
+		val builder = new BaseToExtendedBuilder(pkgBase, pkgExtended)
+		val rs = new ResourceSetImpl
 		val res = loadModel(uri, loadOnDemand) // Just propagate thrown exceptions if any
+		val newRes = rs.createResource(URI.createURI(uri))
 		val root = res.contents.head
 
 		// Ensure that loaded model conforms to the base metamodel
 		if (root.eClass.EPackage != pkgBase)
 			throw new PackageCompatibilityError('''«uri» doesn't conform to the base metamodel''')
 
-		return res
+		mapper.addMapping(builder)
+		res.contents.forEach[o |
+			newRes.contents += mapper.map(o, pkgExtended.EClassifiers.findFirst[name == o.eClass.name].implementationClass) as EObject
+		]
+
+		println("newRes=")
+		newRes.allContents.forEach[println("\t"+it)]
+
+		return newRes
 	}
 
 	private def loadModel(String uri, boolean loadOnDemand) {
@@ -122,6 +134,41 @@ class ExtendedToBaseBuilder extends BeanMappingBuilder
 					ref.name,
 					FieldsMappingOptions.hintA(extendedRefImpl),
 					FieldsMappingOptions.hintB(baseRefImpl)
+				)
+			]
+		]
+	}
+}
+
+class BaseToExtendedBuilder extends BeanMappingBuilder
+{
+	private EPackage pkgBase
+	private EPackage pkgExtended
+
+	new(EPackage base, EPackage extended) {
+		pkgBase = base
+		pkgExtended = extended
+	}
+
+	override protected configure() {
+		pkgBase.EClassifiers.filter(EClass).forEach[cls |
+			val extendedCls = pkgExtended.EClassifiers.filter(EClass).findFirst[name == cls.name]
+			val baseImpl = cls.implementationClass
+			val extendedImpl = extendedCls.implementationClass
+
+			val map = mapping(
+				baseImpl,
+				extendedImpl
+			)
+			cls.EReferences.forEach[ref |
+				val baseRefImpl = ref.EReferenceType.implementationClass
+				val extendedRefImpl = pkgExtended.EClassifiers.filter(EClass).findFirst[name == ref.EReferenceType.name].implementationClass
+
+				map.fields(
+					ref.name,
+					ref.name,
+					FieldsMappingOptions.hintA(baseRefImpl),
+					FieldsMappingOptions.hintB(extendedRefImpl)
 				)
 			]
 		]
