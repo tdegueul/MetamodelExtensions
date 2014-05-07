@@ -123,7 +123,7 @@ class ExtendedToBaseBuilder extends BeanMappingBuilder
 			)
 
 			cls.EReferences
-			.filter[upperBound < 0]
+			.filter[many]
 			.forEach[ref |
 				val baseRefImpl = ref.EReferenceType.implementationClass
 				val extendedRefImpl = extendedCls.EAllReferences.findFirst[name == ref.name].EReferenceType.implementationClass
@@ -161,7 +161,7 @@ class BaseToExtendedBuilder extends BeanMappingBuilder
 			)
 
 			cls.EReferences
-			.filter[upperBound < 0]
+			.filter[many]
 			.forEach[ref |
 				val baseRefImpl = ref.EReferenceType.implementationClass
 				val extendedRefImpl = pkgExtended.EClassifiers.filter(EClass).findFirst[name == ref.EReferenceType.name].implementationClass
