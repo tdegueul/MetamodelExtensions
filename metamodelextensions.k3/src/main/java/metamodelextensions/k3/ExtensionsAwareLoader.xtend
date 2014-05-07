@@ -10,3 +10,10 @@ interface ExtensionsAwareLoader
 	def Resource loadExtendedAsBase(String uri, boolean loadOnDemand) throws PackageCompatibilityError
 	def Resource loadBaseAsExtended(String uri, boolean loadOnDemand) throws PackageCompatibilityError
 }
+
+class PackageCompatibilityError extends Exception
+{
+	new(String msg) {
+		super(msg)
+	}
+}
